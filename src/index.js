@@ -1,66 +1,110 @@
+import loadMenu from "./menu";
+import loadHome from "./home";
+import loadContact from "./contact";
 import './style.css';
-import PizzaChef from "./img/pizza-chef.jpg"
 
-const content = document.getElementById("content");
 
 // Header with restaurant title and navigation buttons
-const header = document.createElement("header");
+function createHeader() {
+  const header = document.createElement("header");
+  
+  const restaurantName = document.createElement("h1");
+  restaurantName.classList.add("restaurant-name");
+  restaurantName.textContent = "Pizzeria La Mendola";
 
-const restaurantName = document.createElement("h1");
-restaurantName.classList.add("restaurant-name");
-restaurantName.textContent = "Pizzeria La Mendola";
+  header.appendChild(restaurantName);
+  header.appendChild(createNav());
 
-const nav = document.createElement("nav");
-const buttons = ["Home", "Menu", "Contact"];
-buttons.forEach((btn) => {
-  const button = document.createElement("button");
-  button.classList.add("button-nav");
-  button.textContent = btn;
-  nav.appendChild(button);
-})
+  return header;
+}
 
-header.appendChild(restaurantName);
-header.appendChild(nav);
+function createNav() {
+  const nav = document.createElement("nav");
+
+  const homeButton = document.createElement("button");
+  homeButton.classList.add("button-nav");
+  homeButton.textContent = "Home";
+  homeButton.addEventListener("click", (e) => {
+    if (e.target.classList.contains("active")) return;
+    setButtonToActive(homeButton);
+    loadHome();
+  });
+  
+  const menuButton = document.createElement("button");
+  menuButton.classList.add("button-nav");
+  menuButton.textContent = "Menu";
+  menuButton.addEventListener("click", (e) => {
+    if (e.target.classList.contains("active")) return;
+    setButtonToActive(menuButton);
+    loadMenu();
+  });
+
+  const contactButton = document.createElement("button");
+  contactButton.classList.add("button-nav");
+  contactButton.textContent = "Contact";
+  contactButton.addEventListener("click", (e) => {
+    if (e.target.classList.contains("active")) return;
+    setButtonToActive(contactButton);
+    loadContact();
+  });
+
+  nav.appendChild(homeButton);
+  nav.appendChild(menuButton);
+  nav.appendChild(contactButton);
+
+  return nav;
+}
+
+function setButtonToActive(button) {
+  const buttons = document.querySelectorAll(".button-nav");
+  
+  buttons.forEach((btn) => {
+    if(btn !== this) {
+      btn.classList.remove("active");
+    }
+  });
+  button.classList.add("active");
+}
 
 // Main content
-const main = document.createElement("main");
-main.id = "main";
+function createMain() {
+  const main = document.createElement("main");
+  main.id = "main";
 
-const mainContent = document.createElement("div");
-mainContent.classList.add("main-content");
-
-const firstLine = document.createElement("p");
-firstLine.textContent = "Enjoy authentic Italian Pizza";
-const secondLine = document.createElement("p");
-secondLine.textContent = "Family owned since 1921";
-
-const image = new Image();
-image.src = PizzaChef;
-
-const bottom = document.createElement("p");
-bottom.textContent = "Dine in or order online!";
-
-mainContent.appendChild(firstLine);
-mainContent.appendChild(secondLine);
-mainContent.appendChild(image);
-mainContent.appendChild(bottom);
-main.appendChild(mainContent);
-
+  return main;
+}
 
 // Footer
-const footer = document.createElement("footer");
+function createFooter() {
+  const footer = document.createElement("footer");
 
-const footerText = document.createElement("p");
-footerText.textContent = "Copyright © 2021 matic1909";
+  const footerText = document.createElement("p");
+  footerText.textContent = "Copyright © 2021 matic1909";
 
-const footerLink = document.createElement("a");
-footerLink.setAttribute("href", "https://github.com/matic1909");
-footerLink.textContent = "GitHub";
+  const footerLink = document.createElement("a");
+  footerLink.setAttribute("href", "https://github.com/matic1909");
+  footerLink.textContent = "GitHub";
 
-footer.appendChild(footerText);
-footer.appendChild(footerLink);
+  footer.appendChild(footerText);
+  footer.appendChild(footerLink);
+
+  return footer;
+}
+
+
 
 // Add everything to the content div
-content.appendChild(header);
-content.appendChild(main);
-content.appendChild(footer);
+function loadWebsite() {
+  const content = document.getElementById("content");
+
+  content.appendChild(createHeader());
+  content.appendChild(createMain());
+  content.appendChild(createFooter());
+
+  setButtonToActive(document.querySelector(".button.nav"));
+  loadHome();
+}
+
+loadWebsite();
+
+export default loadWebsite;
