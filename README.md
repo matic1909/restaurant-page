@@ -1,0 +1,1 @@
+In this project, I will further put into practice, what I have learned about DOM manipulation, webpack and JavaScript in general.
